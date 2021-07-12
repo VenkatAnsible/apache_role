@@ -1,0 +1,9 @@
+---
+# vars file for roles/apache
+pkg:
+  - httpd
+  - firewalld
+srv:
+  - httpd
+  - firewalld
+fs: http

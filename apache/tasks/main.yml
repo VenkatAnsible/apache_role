@@ -1,0 +1,24 @@
+---
+# tasks file for roles/apache
+- name: Install Apche and Firewalld
+  yum:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ pkg }}"
+- name: Start and enable service
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  loop: "{{ srv }}"
+- name: Allow traffic in firewall
+  firewalld:
+    service: "{{ fs }}"
+    state: enabled
+    immediate: yes
+    permanent: yes
+- name: Create a home page
+  template:
+    src: index.html.j2
+    dest: /var/www/html/index.html
+  notify: restart httpd
